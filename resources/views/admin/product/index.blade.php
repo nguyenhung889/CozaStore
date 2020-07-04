@@ -70,10 +70,19 @@
 						<td>
 							<img src="{{ URL::to('/') }}/upload/images/{{ $item['image_product'][0] }}" alt="{{ $item['name_product'] }}" width="120" height="149">
 						</td>
+						<?php 
+							$idCate = $item['categories_id'];
+							$data = array();
+							foreach($dataCate as $k => $v){
+								if($idCate == $v->categories_id){
+									if(!in_array($v->name, $data)){
+										array_push($data, $v->name);
+									}
+								}
+							}
+						?>
 						<td>
-							@foreach($item['categories_id']['name_cat'] as $name)
-								<p> - {{ $name }}</p>
-							@endforeach
+							{{$data[0]}}
 						</td>
 						<td>
 							@foreach($item['colors_id']['name_color'] as $name)
@@ -142,7 +151,7 @@
 							<a href="{{ route('admin.editProduct',['id'=> $item['id']]) }}" class="btn btn-info">Edit</a>
 						</td>
 						<td>
-							<button class="btn btn-danger btnDelete" id="{{ $item['id'] }}">Delete</button>
+							<button class="btn btn-danger btnDelete" data-id="{{ $item['id'] }}" id="delete-product">Delete</button>
 						</td>
 					</tr>
 				@endforeach
@@ -155,9 +164,11 @@
 @push('js')
 	<script type="text/javascript">
 		$(function(){
-			$('.btnDelete').click(function() {
+			$('.btnDelete').on('click',function() {
+				alert('aaaa');
 				let self = $(this);
-				let idPd = self.attr('id');
+				let idPd = self.attr('data-id');
+				console.log(idPd);
 				if($.isNumeric(idPd)){
 					$.ajax({
 						url: "{{ route('admin.deleteProduct') }}",

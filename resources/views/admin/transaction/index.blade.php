@@ -52,7 +52,7 @@
 								<p>(Shipping)</p>
 							@endif
             @else
-              <a href="{{route('admin.sendEmailBill', $transaction->id)}}" class="label-default label">Chờ xử lý</a>
+              <a href="{{route('admin.sendEmailBill', $transaction->id)}}" class="label-default label">Waiting for progressing</a>
             @endif
             </td>
 						<td>

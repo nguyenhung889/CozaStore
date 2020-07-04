@@ -7,10 +7,19 @@
                     <td>
                         <img src="{{ URL::to('/') }}/upload/images/{{ $item['image_product'][0] }}" alt="{{ $item['name_product'] }}" width="120" height="149">
                     </td>
+                    <?php 
+                        $idCate = $item['categories_id'];
+                        $data = array();
+                        foreach($dataCate as $k => $v){
+                            if($idCate == $v->categories_id){
+                                if(!in_array($v->name, $data)){
+                                    array_push($data, $v->name);
+                                }
+                            }
+                        }
+                    ?>
                     <td>
-                        @foreach($item['categories_id']['name_cat'] as $name)
-                            <p> - {{ $name }}</p>
-                        @endforeach
+                        {{$data[0]}}
                     </td>
                     <td>
                         @foreach($item['colors_id']['name_color'] as $name)
@@ -78,7 +87,37 @@
                         <a href="{{ route('admin.editProduct',['id'=> $item['id']]) }}" class="btn btn-info">Edit</a>
                     </td>
                     <td>
-                        <button class="btn btn-danger btnDelete" id="{{ $item['id'] }}">Delete</button>
+                        <button class="btn btn-danger btnDelete2" data-id="{{ $item['id'] }}" id="delete-pro">Delete</button>
                     </td>
                 </tr>
             @endforeach
+
+<script type="text/javascript">
+    $(function(){
+        $('.btnDelete2').on('click',function() {
+            let self = $(this);
+            let idPd = self.attr('data-id');
+            if($.isNumeric(idPd)){
+            	$.ajax({
+            		url: "{{ route('admin.deleteProduct') }}",
+            		type: "POST",
+            		data: {id: idPd},
+            		beforeSend: function(){
+            			$('.modal').css('display','block');
+            		},
+            		success: function(result){
+            			self.text('Delete');
+            			result = $.trim(result);
+            			if(result === 'OK'){
+            				window.location.reload(true);
+            				$('#row_'+idPd).hide();
+            			} else {
+            				console.log('Delete fail');
+            			}
+            			return false; 
+            		}
+            	});
+            }
+        });
+    });
+</script>

@@ -37,8 +37,6 @@ class ProductController extends Controller
         $rate = [];
         $arrS = [];
         foreach($data['lstPd'] as $key => $item) {
-            // xu ly cat
-            $data['lstPd'][$key]['categories_id'] = json_decode($item['categories_id'],true);
             // xu ly color
             $data['lstPd'][$key]['colors_id'] = json_decode($item['colors_id'],true);
             // xu ly size
@@ -68,14 +66,10 @@ class ProductController extends Controller
         }
         $data['arrS'] = $arrS;
         $data['avg_rating'] = $rate;
-        foreach($data['lstPd'] as $key => $item){
-           foreach($data['cat'] as $k => $val){
-                if(in_array($val['id'], $item['categories_id'])){
-                    $data['lstPd'][$key]['categories_id']['name_cat'][] = $val['name'];
-                }
-           }  
-        }
-
+        $dataCate = Categories::join('products','products.categories_id','=','categories.id')
+                                ->select('products.categories_id','categories.name')
+                                ->get();
+        $data['dataCate'] = $dataCate;
         foreach($data['lstPd'] as $key => $item){
            foreach($data['colors'] as $k => $val){
                 if(in_array($val['id'], $item['colors_id'])){
@@ -112,7 +106,7 @@ class ProductController extends Controller
             $data[$item->id] = $request->post('size_qty_'.$item->id);
         }
         $nameProduct = $request->nameProduct;
-        $categories  = $request->cat;
+        $categories  = $request->cate;
         $colors = array($request->color);
         $brand = $request->brands;
         $price = $request->price;
@@ -152,7 +146,7 @@ class ProductController extends Controller
             $dataInsert = [
                 'name_product' => $nameProduct,
                 'pro_slug' => str_slug($nameProduct),
-                'categories_id' => json_encode($categories),
+                'categories_id' => $categories,
                 'colors_id' => json_encode($colors),
                 'sizes_id' => json_encode($data),
                 'brands_id' => $brand,
@@ -367,15 +361,14 @@ class ProductController extends Controller
             $rate = [];
             $arrS = [];
             foreach($data['lstPd'] as $key => $item) {
-                // xu ly cat
-                $data['lstPd'][$key]['categories_id'] = json_decode($item['categories_id'],true);
                 // xu ly color
                 $data['lstPd'][$key]['colors_id'] = json_decode($item['colors_id'],true);
                 // xu ly size
                 $data['lstPd'][$key]['sizes_id'] = json_decode($item['sizes_id'],true);
                 // xu ly images product
-                $data['lstPd'][$key]['image_product'] = json_decode($item['image_product'],true);
+                $data['lstPd'][$key]['image_product'] = json_decode($item['image_product'],true);   
             }
+            // Rating star
             $allPro = Products::all();
             foreach($allPro as $key => $item){
                 $id = $item->id;
@@ -383,34 +376,31 @@ class ProductController extends Controller
                                 ->select('co_rating')
                                 ->where('comments.co_product_id',$id)
                                 ->get();
-            // $count = count(json_decode($rating));
+               // $count = count(json_decode($rating));
                 $arr = json_decode($rating);
                 // $rate += $arr;
                 $rate[$id] = array();
                 array_push($rate[$id], $arr); 
-
-             $dataS = Sizes::join('products_detail','sizes.id','=','products_detail.pd_size_id')->select('sizes.id','sizes.letter_size','sizes.number_size','products_detail.pd_qty','products_detail.pd_product_id')
-                        ->where('products_detail.pd_product_id', $id)->get();
-            
-            array_push($arrS, json_decode($dataS));
-        }
-        $data['arrS'] = $arrS;
-        $data['avg_rating'] = $rate;
-        foreach($data['lstPd'] as $key => $item){
-           foreach($data['cat'] as $k => $val){
-                if(in_array($val['id'], $item['categories_id'])){
-                    $data['lstPd'][$key]['categories_id']['name_cat'][] = $val['name'];
-                }
-           }  
-        }
-
-        foreach($data['lstPd'] as $key => $item){
-           foreach($data['colors'] as $k => $val){
-                if(in_array($val['id'], $item['colors_id'])){
-                    $data['lstPd'][$key]['colors_id']['name_color'][] = $val['name_color'];
-                }
-           }
-        }
+    
+                $dataS = Sizes::join('products_detail','sizes.id','=','products_detail.pd_size_id')
+                            ->select('sizes.id','sizes.letter_size','sizes.number_size','products_detail.pd_qty','products_detail.pd_product_id')
+                            ->where('products_detail.pd_product_id', $id)->get();
+                
+                array_push($arrS, json_decode($dataS));
+            }
+            $data['arrS'] = $arrS;
+            $data['avg_rating'] = $rate;
+            $dataCate = Categories::join('products','products.categories_id','=','categories.id')
+                                    ->select('products.categories_id','categories.name')
+                                    ->get();
+            $data['dataCate'] = $dataCate;
+            foreach($data['lstPd'] as $key => $item){
+               foreach($data['colors'] as $k => $val){
+                    if(in_array($val['id'], $item['colors_id'])){
+                        $data['lstPd'][$key]['colors_id']['name_color'][] = $val['name_color'];
+                    }
+               }
+            }
             $html = view('admin.product.search',$data)->render();
             return response()->json($html);
         }

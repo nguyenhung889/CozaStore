@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         view()->share('products', $products);
 
         if (!$this->app->isLocal()) {
-            $this->app['request']->server->set('HTTPS', true);
+            $this->app['request']->server->set('HTTP', true);
         }
     }
 

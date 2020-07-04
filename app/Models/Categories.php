@@ -18,9 +18,6 @@ class Categories extends Model
     public function getAllDataCategories()
     {
     	$data = Categories::all();
-    	if($data){
-    		$data = $data->toArray();
-    	}
     	return $data;
     }
     public function deleteCategoryById($id)
@@ -34,9 +31,6 @@ class Categories extends Model
     public function getInfoDataCategoryById($id)
     {
         $data = Categories::find($id);
-        if($data){
-            $data = $data->toArray();
-        }
         return $data;
     }
 

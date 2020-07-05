@@ -21,7 +21,7 @@ class OrderController extends Controller
                                 ,'orders.or_transaction_id','transactions.tr_total',
                                 'transactions.tr_status','transactions.tr_user_id','orders.or_product_id',
                                 'products.name_product','products.image_product','orders.or_size','orders.or_color',
-                                'transactions.tr_confirm')
+                                'transactions.tr_confirm','transactions.tr_payment_method')
                         ->where('transactions.tr_user_id',$idUser)
                         ->orderBy('orders.or_transaction_id')
                         ->get();
@@ -36,6 +36,16 @@ class OrderController extends Controller
         $transaction = Transaction::find($id);
         $transaction->tr_confirm = Transaction::STATUS_DONE;
         $transaction->save();
+        \Toastr::success('Confirmed successfully', '', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
     }
+    public function removeOrders(Request $request){
+        $transaction = new Transaction;
+        $id = $request->transaction_id;
+        $transaction = Transaction::find($id);
+        $transaction->tr_confirm = Transaction::STATUS_CANCEL;
+        $transaction->save();
+        \Toastr::success('Removed successfully', '', ["positionClass" => "toast-top-right"]);
+        return redirect()->route('fr.getOrderTracking');
+    } 
 }

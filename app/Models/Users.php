@@ -26,6 +26,18 @@ class Users extends Model
 
         return $data;
     }
+    public function getAllDataUser($keyword = '')
+    {
+        $data = Users::select('id','username','email','user_image')
+                ->where('username','LIKE','%'.$keyword.'%')
+                ->orWhere('email', 'LIKE' , '%'.$keyword.'%')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        // if($data){
+        //     $data = $data->toArray();
+        // }
+        return $data;
+    }
 
     public function checkUserLogin($user, $pass)
     {

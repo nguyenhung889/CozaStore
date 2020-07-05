@@ -223,11 +223,10 @@ class ProductController extends Controller
             $data['brands'] = $brand->getAllDataBrands();
             $data['info'] = $infoPd;
 
-            $data['infoCat'] = json_decode($infoPd['categories_id'],true);
+            $data['infoCat'] = $infoPd['categories_id'];
             $data['infoColor'] = json_decode($infoPd['colors_id'],true);
             $data['infoSize'] = json_decode($infoPd['sizes_id'],true);
             $data['infoImage'] = json_decode($infoPd['image_product'],true);
-            //dd($infoPd);
 
             return view('admin.product.edit_view',$data);
         } else {

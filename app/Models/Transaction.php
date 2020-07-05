@@ -9,7 +9,8 @@ class Transaction extends Model
 {
     protected $table="transactions";
     protected $guarded = ['*'];
-
+    const STATUS_REMOVED = 3;
+    const STATUS_CANCEL = 2;
     const STATUS_DONE = 1;
     const STATUS_DEFAULT = 0;
 

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Input;
 use Session;
 use Stripe;
 use Mail;
+use Carbon\Carbon;
 
 
 class CartController extends BaseController
@@ -38,27 +39,32 @@ class CartController extends BaseController
         $product = Products::select('name_product', 'id', 'price','colors_id','sizes_id', 'qty', 'image_product','sale_off','categories_id')->find($id);
         if(!$product) return redirect('/');
         
-        if($product->qty == 0 || $request->qty2 == 0){
+        $idCate = $product->categories_id;
+        if(!$request->inlineRadioOptions || !$request->inlineRadioOptionsColor){
+            \Toastr::warning('Please choose size and color!', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
+        elseif($product->qty == 0 || $request->qty2 == 0){
             \Toastr::warning('This product is out of stock. Please choose anothers', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
-        $countStr = strlen($product->categories_id);
-        $idCate2 = substr($product->categories_id,-($countStr-2));
-        $idCate = substr($idCate2,0,($countStr-4));
-        Cart::add([
-            			'id' => $id,
-            			'name' => $product->name_product,
-            			'qty' => $request->num_product,
-            			'price' => $product->price - $product->price * $product->sale_off /100,
-            			'options' => [
-                            'images' => json_decode($product->image_product,true)[0],
-                            'size' => $request->inlineRadioOptions,
-                            'color' => $request->inlineRadioOptionsColor,
-                            'cate' => $idCate,
-            			]
-                    ]);
-        \Toastr::success('Add to cart successfully', '', ["positionClass" => "toast-top-right"]);
-        return redirect()->back();
+        else{
+            Cart::add([
+                'id' => $id,
+                'name' => $product->name_product,
+                'qty' => $request->num_product,
+                'price' => $product->price - $product->price * $product->sale_off /100,
+                'options' => [
+                    'images' => json_decode($product->image_product,true)[0],
+                    'size' => $request->inlineRadioOptions,
+                    'color' => $request->inlineRadioOptionsColor,
+                    'cate' => $idCate,
+                ]
+            ]);
+            \Toastr::success('Add to cart successfully', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('fr.getListCart');
+        }
+        
     }
     public function getListCart(){
         $products =  Cart::content();
@@ -97,7 +103,8 @@ class CartController extends BaseController
             'tr_note' => $request->note,
             'tr_address' => $request->address,
             'tr_phone' => $request->phone,
-            'tr_payment_method' => $request->payment
+            'tr_payment_method' => $request->payment,
+            'created_at' => Carbon::now()
         ]);
         if($request->payment === 'Stripe'){
             return view('frontend.payment.index');
@@ -106,7 +113,7 @@ class CartController extends BaseController
             {
                 $products = Cart::content();
                 foreach($products as $product){
-                    Order::insert([
+                    $or = Order::insert([
                         'or_transaction_id' => $transactionId,
                         'or_product_id' => $product->id,
                         'or_qty' => $product->qty,
@@ -176,6 +183,8 @@ class CartController extends BaseController
             $order->or_qty = $product->qty;
             $order->or_price = $product->price - $product->price * $product->sale_off /100;
             $order->or_payment_method ='Stripe';
+            $order->or_size = $product->options->size;
+            $order->or_color = $product->options->color;
             $order->save();
             // 'or_sale' => $product->price,
         }

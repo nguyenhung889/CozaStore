@@ -423,7 +423,7 @@ img {
 										<div>
 										@foreach($colors as $key => $item)
 											<label class="form-check radbox" style="padding-top: 10px;">
-												<input class= "color-rd" type="radio" name="inlineRadioOptionsColor" id="color_{{ $item['id'] }}" value="{{ $item['id'] }}" class="checked-button" required>
+												<input class= "color-rd" type="radio" name="inlineRadioOptionsColor" id="color_{{ $item['id'] }}" value="{{ $item['id'] }}" class="checked-button">
 												<span class="color rad-text" style="font-size: 12px;"
 												>{{ $item['name_color'] }}</span>
 											</label>
@@ -434,8 +434,8 @@ img {
 										<div class="size-items">
 											@foreach($sizes as $key => $item)
 											<label class="form-check radbox" style="">
-												<input class="size-rd" type="radio" name="inlineRadioOptions" id="size_{{ $item->id }}" value="{{ $item->id }}" required>
-												@if($idCate == 5)
+												<input class="size-rd" type="radio" name="inlineRadioOptions" id="size_{{ $item->id }}" value="{{ $item->id }}">
+												@if($idCate->categories_id == 5)
 												<span class="size rad-text" data-toggle="tooltip" title="" style="font-size: 12px;">{{$item->number_size}}</span>
 												@else
 												<span class="size rad-text" data-toggle="tooltip" title="" style="font-size: 12px;">{{$item->letter_size}}</span>

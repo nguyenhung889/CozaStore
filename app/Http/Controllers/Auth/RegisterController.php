@@ -53,17 +53,18 @@ class RegisterController extends Controller
 
     public function postRegister(Request $request){
         //dd($request->all());
-        $user = new Users();
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
+        $email = Users::select('email')->where('email',$request->email)->first();
+        if(!$email){
+            $user = new Users();
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
 
-        if($user->id){
             \Toastr::success('Register successfully', '', ["positionClass" => "toast-top-right"]);
             return redirect()->route('get.login');
         }
-        \Toastr::error('Register failed', 'Lỗi', ["positionClass" => "toast-top-right"]);
+        \Toastr::error('This email is existed. Please try another email.', '', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
     }
     protected function validator(array $data)
@@ -82,7 +83,7 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {
+    {   
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

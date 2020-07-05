@@ -11,9 +11,6 @@
   height: 40px;
 	
 }
-.form-control{
-	border-radius: 25px;
-}
 @media only screen and (max-width: 1024px){
   .shopping{
 		width:100%;

@@ -94,7 +94,6 @@
 					@endforeach
 					</tbody>
 				</table>
-				<button class="btn btn-info btn-add-size"><i class="fa fa-plus" aria-hidden="true"></i></button>
 			</div>
 			<div class="form-group border-top">
 				<label for="brands"> Brands </label>	

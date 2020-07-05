@@ -45,15 +45,18 @@
 				<input type="text" class="form-control" name="nameProduct" id="nameProduct" value="{{ $info['name_product'] }}">
 			</div>
 			<div class="form-group border-top">
+				<?php 
+					$cat = json_decode($cat);
+				?>
 				<p> Categories : </p>
 				@foreach($cat as $key => $item)
-					<label for="cat_{{ $item['id'] }}"> {{ $item['name'] }} </label>
+					<label for="cat_{{ $item->id }}"> {{ $item->name }} </label>
 					<input 
 						type="radio"
-						name="cat[]" 
-						id="cat_{{ $item['id'] }}"
-						value="{{ $item['id'] }}"
-						{{ in_array($item['id'], $infoCat) ? 'checked' : '' }}
+						name="cat" 
+						id="cat_{{ $item->id }}"
+						value="{{ $item->id }}"
+						{{ $item->id == $infoCat ? 'checked' : '' }}
 					>
 				@endforeach
 			</div>

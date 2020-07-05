@@ -10,7 +10,7 @@ class AdminBlogController extends Controller
 {
     public function index(Request $request)
     {
-        $blogs = Blogs::all();
+        $blogs = Blogs::select('id','b_name','b_image','b_description','b_active','created_at')->orderBy('created_at','DESC')->get();
         return view('admin.blogs.index',compact('blogs'));
     }
     public function getAddBlogs()
@@ -57,7 +57,7 @@ class AdminBlogController extends Controller
                         $data->b_image = json_encode($file_name);
                         $data->save();
                         \Toastr::success('Add blog successfully', '', ["positionClass" => "toast-top-right"]);
-                        return redirect()->back();
+                        return redirect()->route('admin.blogs');
                     }
 
                 } else {
@@ -141,6 +141,17 @@ class AdminBlogController extends Controller
         } else {
             \Toastr::error("You don't have a product image", '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
+        }
+    }
+    public function searchBlogs(Request $request, Blogs $blogs){
+        if($request->ajax()){
+            $value = $request->value;
+            $blogs = $blogs->getAllDataBlogs($value);
+            $viewData = [
+                'blogs' => $blogs
+            ];
+            $html = view('admin.blogs.searchBlogs', $viewData)->render();
+            return response()->json($html);
         }
     }
 }

@@ -263,7 +263,7 @@ section .section-title {
 							</div>
 							<form action="" method="POST">
 							@csrf
-							<input type="hidden" name="transaction_id" id="transaction_id">
+							<input type="hidden" name="transaction_id" id="transaction_id" class="transaction_id">
 							<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
@@ -278,7 +278,7 @@ section .section-title {
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-												<button type="submit" class="btn btn-primary">Confirm</button>
+												<button type="submit" class="btn btn-primary btnReceived">Confirm</button>
 											</div>
 										</div>
 									</div>
@@ -368,7 +368,12 @@ section .section-title {
 	$(document).ready(function(){
 		$('.btn-id').click(function(){
 			let id = $(this).attr('id');
-			$('#transaction_id').attr("value",id);
+			console.log(id);
+			$('.transaction_id').attr("value",id);
+			
+		});
+		$('.btnReceived').click(function(){
+			let id = $('.btn-id').attr('id');
 			let container = '#container-'+id;
 			console.log(container);
 			$(container).remove();

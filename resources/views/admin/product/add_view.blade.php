@@ -47,10 +47,10 @@
 				<input type="text" class="form-control" name="nameProduct" id="nameProduct">
 			</div>
 			<div class="form-group border-top">
-				<p> Categories : </p>
+				<p> Categories: </p>
 				@foreach($cat as $key => $item)
 					<label for="cat_{{ $item['id'] }}"> {{ $item['name'] }} </label>
-					<input type="radio" name="cat[]" id="cat_{{ $item['id'] }}" value="{{ $item['id'] }}">
+					<input type="radio" name="cate" id="cat_{{ $item['id'] }}" value="{{ $item['id'] }}">
 				@endforeach
 			</div>
 			<!-- <div class="form-group border-top">
@@ -94,7 +94,6 @@
 					@endforeach
 					</tbody>
 				</table>
-				<button class="btn btn-info btn-add-size"><i class="fa fa-plus" aria-hidden="true"></i></button>
 			</div>
 			<div class="form-group border-top">
 				<label for="brands"> Brands </label>	

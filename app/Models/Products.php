@@ -52,7 +52,7 @@ class Products extends Model
                 ->join('brands','brands.id','=','products.brands_id')
                 ->where('products.name_product','LIKE','%'.$keyword.'%')
                 ->orWhere('products.price', 'LIKE' , '%'.$keyword.'%')
-                ->orderBy('products.id')
+                ->orderBy('created_at','DESC')
                 ->paginate(100);
         // if($data){
         //     $data = $data->toArray();

@@ -106,7 +106,10 @@ section .section-title {
 			if($value->tr_confirm == 1){
 				$checked--;
 				$received++;
-			}else{
+			}elseif($value->tr_confirm == 2){
+				$unchecked--;
+			}
+			else{
 				$checked = $checked;
 				$received = $received;
 			}
@@ -135,6 +138,7 @@ section .section-title {
 							@if($items[0]->tr_status === 0)
 							<div class="container container-3">
 								@foreach($items as $item)
+							
 								<?php
 									$countStr = strlen($item->image_product);
 									$link1 = substr($item->image_product,-($countStr-2));
@@ -162,7 +166,41 @@ section .section-title {
 								</div>
 								@endforeach
 							</div>
-							<h2 class="card-title" style="float:right; color: red;margin: 50px 0px;">Total: {{$item->tr_total}}$</h2>
+							<div class="container container-3" id="container-{{$key}}" style="margin-top:0 !important;">
+								<div class="card card-total-price">
+									<div class="card-body" style="display: flex;flex-direction: column;align-items: flex-end;">
+										@if($item->tr_payment_method === 'COD')
+										<h2 class="card-title" style="color:red !important;">Total: {{ $item->tr_total }}$</h2>
+										<button class="btn btn-primary btn-id" data-toggle="modal" id="{{$key}}" data-target="#ModalCenter2" id="btnCancel">Remove</button>
+										@else
+										<h2 class="card-title" style="color:red !important;">Total: {{ $item->tr_total }}$</h2>
+										@endif
+									</div>
+								</div>  
+							</div>
+							<form action="{{route('fr.removeOrders')}}" method="POST">
+							@csrf
+							<input type="hidden" name="transaction_id" id="transaction_id">
+							<div class="modal fade" id="ModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLongTitle">Cancel order</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												Are you sure you cancel this orders?
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+												<button type="submit" class="btn btn-primary">Confirm</button>
+											</div>
+										</div>
+									</div>
+							</div>
+							</form>
 							@endif
 							@endforeach
 							@else
@@ -215,11 +253,11 @@ section .section-title {
 								</div>
 								@endforeach
 							</div>
-							<div class="container container-3" id="container-{{$item_key}}" style="margin-top:0 !important;">
+							<div class="container container-3" id="container-{{$key}}" style="margin-top:0 !important;">
 								<div class="card card-total-price">
 									<div class="card-body" style="display: flex;flex-direction: column;align-items: flex-end;">
 										<h2 class="card-title" style="color:red !important;">Total: {{ $item->tr_total }}$</h2>
-										<button class="btn btn-primary btn-id" data-toggle="modal" id="{{$item_key}}" data-target="#ModalCenter" id="btnReceived">Received</button>
+										<button class="btn btn-primary btn-id" data-toggle="modal" id="{{$key}}" data-target="#ModalCenter" id="btnReceived">Received</button>
 									</div>
 								</div>  
 							</div>

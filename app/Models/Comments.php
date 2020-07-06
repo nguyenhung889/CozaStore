@@ -21,14 +21,14 @@ class Comments extends Model
         $data = DB::table('comments')
                     ->join('blogs','blogs.id', '=', 'comments.co_blog_id')
                     ->select('comments.*', 'blogs.b_name')
-                    ->orderBy('comments.id')
+                    ->orderBy('created_at','DESC')
                     ->paginate(10);
         return $data;
     }
     public function postFeedbackProducts(){
         $data =DB::table('comments')->join('products','products.id', '=', 'comments.co_product_id')
                         ->select('comments.*', 'products.name_product')
-                        ->orderBy('comments.id')
+                        ->orderBy('created_at','DESC')
                         ->paginate(10);
 
         return $data;

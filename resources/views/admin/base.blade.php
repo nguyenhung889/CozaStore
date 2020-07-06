@@ -92,6 +92,7 @@
             <a class="collapse-item" href="{{ route('admin.transactions') }}">Transactions</a>
             <a class="collapse-item" href="{{ route('admin.blogs') }}">Blogs</a>
             <a class="collapse-item" href="{{ route('admin.getFeedbackProducts') }}">Feedbacks</a>
+            <a class="collapse-item" href="{{ route('admin.calculateRevenue') }}">Revenue</a>
           </div>
         </div>
       </li>

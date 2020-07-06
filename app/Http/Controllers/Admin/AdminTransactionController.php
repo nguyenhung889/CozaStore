@@ -12,11 +12,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductDetails;
 use Mail;
-
+Use Carbon\Carbon;
 class AdminTransactionController extends Controller
 {
     public function index(){
-        $transactions = Transaction::with('user:id,username')->paginate(8);
+        $transactions = Transaction::with('user:id,username')->orderBy('created_at','DESC')->paginate(10);
 
         $viewData = [
             'transactions' => $transactions
@@ -76,7 +76,8 @@ class AdminTransactionController extends Controller
             'address' => $transactions->tr_address,
             'infoProduct' => json_decode($dataProduct),
             'total' => $transactions->tr_total,
-            'paymentMethod' => $transactions->tr_payment_method
+            'paymentMethod' => $transactions->tr_payment_method,
+            'created_at' => Carbon::now()
         ];
         $transactions->tr_status = Transaction::STATUS_DONE;
         $transactions->save();
@@ -97,5 +98,22 @@ class AdminTransactionController extends Controller
                 echo "FAIL";
             }
         }
+    }
+    public function calculateRevenue(){
+        $dataStripe = Transaction::select('id','tr_total','tr_payment_method')->where('tr_payment_method','=','Stripe')->get();
+        $dataCod = Transaction::select('id','tr_total','tr_payment_method','tr_confirm')->where('tr_payment_method','=','COD')->get();
+        $viewData = [
+            'dataStripe' => $dataStripe,
+            'dataCod' => $dataCod
+        ];
+        return view('admin.revenue.revenue', $viewData);
+    }
+    public function confirmTransaction(Request $request, $id)
+    {
+        $transactions = Transaction::find($id);
+        $transactions->tr_confirm = Transaction::STATUS_REMOVED;
+        $transactions->save();
+        \Toastr::success('Removed order successfully', '', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
     }
 }

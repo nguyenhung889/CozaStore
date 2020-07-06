@@ -119,6 +119,8 @@ function(){
 	});
 	Route::group(['prefix' => 'users'], function(){
 		Route::get('/','AdminUserController@index')->name('users');
+		//Search user
+		Route::post('/','AdminUserController@searchUsers')->name('searchUsers');
 		Route::post('/delete-user','AdminUserController@deleteUser')->name('deleteUser');
 	});
 	Route::group(['prefix' => 'transactions'], function(){
@@ -127,9 +129,14 @@ function(){
 		Route::get('/active/{id}','AdminTransactionController@activeTransaction')->name('getActiveTransaction');
 		Route::post('/active/{id}','AdminTransactionController@activeTransaction')->name('sendEmailBill');
 		Route::post('delete-transaction','AdminTransactionController@deleteTransaction')->name('deleteTransaction');
+		//Admin confirm remove order
+		Route::post('/confirm/{id}','AdminTransactionController@confirmTransaction')->name('confirmTransaction');
+
 	});
 	Route::group(['prefix' => 'blogs'], function(){
 		Route::get('/','AdminBlogController@index')->name('blogs');
+		//Search blog
+		Route::post('/','AdminBlogController@searchBlogs')->name('searchBlogs');
 		Route::get('/add-blogs', 'AdminBlogController@getAddBlogs')->name('getAddBlogs');
 		Route::post('/handle-add-blogs', 'AdminBlogController@handleAddBlogs')->name('handleAddBlogs');
 		Route::post('delete-blogs','AdminBlogController@deleteBlogs')->name('deleteBlogs');
@@ -143,6 +150,10 @@ function(){
 		Route::post('','AdminFeedbackController@postFeedbackProducts')->name('postFeedbackProducts');
 		Route::post('/blogs','AdminFeedbackController@getFeedbackBlogs')->name('getFeedbackBlogs');
 		Route::post('delete-feedback','AdminFeedbackController@deleteFeedback')->name('deleteFeedback');
+	});
+
+	Route::group(['prefix' => 'revenue'], function(){
+		Route::get('','AdminTransactionController@calculateRevenue')->name('calculateRevenue');
 	});
 });
 
@@ -196,6 +207,7 @@ Route::group([
 	//Order tracking
 	Route::get('track-order','OrderController@index')->name('getOrderTracking');
 	Route::post('track-order','OrderController@confirmOrders');
+	Route::post('remove-order','OrderController@removeOrders')->name('removeOrders');
 	//Favorite product
 	Route::post('/favorite/{id}','UserFavoriteController@addFavorite')->name('postAddFavorite');
 	Route::get('/favorite','UserFavoriteController@index')->name('getFavoriteProduct');

@@ -20,11 +20,12 @@
 	<div class="col-md-12">
 		<h3 class="text-center">Users</h3>
 		<br>
-		<!-- @if($message = Session::get('success'))
-			<div class="alert alert-success">
-				<p>{{ $message }}</p>
+		<form action="" method="post" style="width: 100%;">
+			<div class="form-group has-search">
+				<span class="fa fa-search form-control-feedback"></span>
+				<input type="search" class="form-control" placeholder="Search" id="searchUser">
 			</div>
-		@endif -->
+		</form>
 	</div>
 </div>
 <div class="modal"></div>
@@ -40,12 +41,12 @@
 					<th colspan="2" width="3%" class="text-center">Action</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="contentUser">
 			@if(isset($users))
           	@foreach($users as $key => $user)
-          <tr>
+          			<tr>
 						<td>
-							{{  $key }}
+							{{  $key + 1 }}
 						</td>
 						<td>{{ $user->username }}</td>
 						<td>{{ $user->email }}</td> 
@@ -98,13 +99,22 @@
 							}
 							return false; 
 						},
-						// error: function (result) {
-						// 	console.log(result+" Error!");
-						// },
 					});
 				}
 			});
-			
+			$('#searchUser').keyup(function(){
+				let value = $(this).val();
+				$.ajax({
+					url: "{{ route('admin.searchUsers') }}",
+					type: "post",
+					data: { value: value },
+					success: function(res){
+						$('#contentUser').html('');
+						$('#contentUser').append(res);
+						//console.log(res);
+					}
+				})
+			});	
 		})
 </script>
 @endpush

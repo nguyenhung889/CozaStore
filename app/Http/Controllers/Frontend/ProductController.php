@@ -19,7 +19,7 @@ class ProductController extends BaseController
 {
 	private function getRalativeProducts($cateId)
 	{
-        $items = DB::table('products')->whereJsonContains('categories_id', $cateId)->select('id','name_product','categories_id', 'price','image_product', 'sale_off', 'pro_slug')->get();
+        $items = DB::table('products')->where('categories_id', $cateId)->select('id','name_product','categories_id', 'price','image_product', 'sale_off', 'pro_slug')->get();
 		return $items;
 	}
     public function index(Categories $cate, Products $pd)
@@ -59,35 +59,32 @@ class ProductController extends BaseController
 					$userName = json_decode($infoUser)[0]->username;
 					$userEmail = json_decode($infoUser)[0]->email;
 					if($infoPd){
-					$arrColor = json_decode($infoPd[0]['colors_id'], true);
-					// $arrSize = json_decode($infoPd[0]['sizes_id'], true);
-					//dd($arrSize);
-					$arrImage = json_decode($infoPd[0]['image_product'],true);
-					$arrProducts = json_decode($items);
-					$infoColor = $color->getInfoColorByArrId($arrColor);
-					// $infoSize  = $size->getInfoSizeByArrid($arrSize);
-					$cateId = Products::select('categories_id')->where('id', $id)->first();
-					$countStr = strlen($cateId->categories_id);
-					$cateId1 = substr($cateId->categories_id,-($countStr-2));
-					$idCate = substr($cateId1,0,($countStr-4));
-					$data = [];
-					$data['info'] = $infoPd;
-					$data['items'] = $arrProducts;
-					$data['images'] = $arrImage;
-					$data['colors'] = $infoColor;
-					$data['sizes'] = $arrSizes;
-					$data['cate'] = $this->getAllDataCategoriesForUser($cate);
-					$data['comments'] = Comments::where('co_product_id', $id)->get();
-					$data['userName'] = $userName;
-					$data['userEmail'] = $userEmail;
-					$data['idCate'] = $idCate;
-					$data['relativeProducts'] = $this->getRalativeProducts($idCate);
-					//dd($data['sizes']);
-					return view('frontend.product.detail',$data);
+						$arrColor = json_decode($infoPd[0]['colors_id'], true);
+						// $arrSize = json_decode($infoPd[0]['sizes_id'], true);
+						//dd($arrSize);
+						$arrImage = json_decode($infoPd[0]['image_product'],true);
+						$arrProducts = json_decode($items);
+						$infoColor = $color->getInfoColorByArrId($arrColor);
+						// $infoSize  = $size->getInfoSizeByArrid($arrSize);
+						$cateId = Products::select('categories_id')->where('id', $id)->first();
+						$data = [];
+						$data['info'] = $infoPd;
+						$data['items'] = $arrProducts;
+						$data['images'] = $arrImage;
+						$data['colors'] = $infoColor;
+						$data['sizes'] = $arrSizes;
+						$data['cate'] = $this->getAllDataCategoriesForUser($cate);
+						$data['comments'] = Comments::where('co_product_id', $id)->get();
+						$data['userName'] = $userName;
+						$data['userEmail'] = $userEmail;
+						$data['idCate'] = $cateId;
+						$data['relativeProducts'] = $this->getRalativeProducts($cateId);
+						//dd($data['sizes']);
+						return view('frontend.product.detail',$data);
 
-				} else {
-					abort(404);
-				}
+					} else {
+						abort(404);
+					}
 			}else{
 				$product = Products::find($id);
 				if($infoPd){
@@ -98,10 +95,6 @@ class ProductController extends BaseController
 					$infoColor = $color->getInfoColorByArrId($arrColor);
 					// $infoSize  = $size->getInfoSizeByArrid($arrSize);
 					$cateId = Products::select('categories_id')->where('id', $id)->first();
-					$countStr = strlen($cateId->categories_id);
-					$cateId1 = substr($cateId->categories_id,-($countStr-2));
-					$idCate = substr($cateId1,0,($countStr-4));
-					
 					
 					$data = [];
 					$data['info'] = $infoPd;
@@ -110,8 +103,8 @@ class ProductController extends BaseController
 					$data['colors'] = $infoColor;
 					$data['sizes'] = $arrSizes;
 					$data['cate'] = $this->getAllDataCategoriesForUser($cate);
-					$data['idCate'] = $idCate;
-					$data['relativeProducts'] = $this->getRalativeProducts($idCate);
+					$data['idCate'] = $cateId;
+					$data['relativeProducts'] = $this->getRalativeProducts($cateId);
 					
 					return view('frontend.product.detail',$data);
 			}
@@ -125,19 +118,19 @@ class ProductController extends BaseController
 		$sortDate = $request->sortDate;
 		$sortPrice = $request->sortPrice === 'asc' ? '1' : '0';
 		if($min && $max){
-			$items = DB::table('products')->whereJsonContains('categories_id', $id)->whereBetween('price', [$min, $max])->get();
+			$items = DB::table('products')->where('categories_id', $id)->whereBetween('price', [$min, $max])->get();
 			if($sortPrice === '1'){
-				$items = DB::table('products')->whereJsonContains('categories_id', $id)->whereBetween('price', [$min, $max])->orderBy('price','asc')->get();
+				$items = DB::table('products')->where('categories_id', $id)->whereBetween('price', [$min, $max])->orderBy('price','asc')->get();
 			}else if($sortPrice === '0'){
-				$items = DB::table('products')->whereJsonContains('categories_id', $id)->whereBetween('price', [$min, $max])->orderBy('price','desc')->get();
+				$items = DB::table('products')->where('categories_id', $id)->whereBetween('price', [$min, $max])->orderBy('price','desc')->get();
 			}
 		}else if($sortPrice === '1'){
-			$items = DB::table('products')->whereJsonContains('categories_id', $id)->orderBy('price','asc')->get();
+			$items = DB::table('products')->where('categories_id', $id)->orderBy('price','asc')->get();
 		}else if($sortPrice === '0'){
-			$items = DB::table('products')->whereJsonContains('categories_id', $id)->orderBy('price','desc')->get();
+			$items = DB::table('products')->where('categories_id', $id)->orderBy('price','desc')->get();
 		}
 		else{
-			$items = DB::table('products')->whereJsonContains('categories_id', $id)->get();
+			$items = DB::table('products')->where('categories_id', $id)->get();
 		}
 		
 		return view('frontend.categories.index', compact('items'));

@@ -67,6 +67,7 @@ class ProductController extends BaseController
 						$infoColor = $color->getInfoColorByArrId($arrColor);
 						// $infoSize  = $size->getInfoSizeByArrid($arrSize);
 						$cateId = Products::select('categories_id')->where('id', $id)->first();
+						$idCate = json_decode($cateId)->categories_id;
 						$data = [];
 						$data['info'] = $infoPd;
 						$data['items'] = $arrProducts;
@@ -78,7 +79,7 @@ class ProductController extends BaseController
 						$data['userName'] = $userName;
 						$data['userEmail'] = $userEmail;
 						$data['idCate'] = $cateId;
-						$data['relativeProducts'] = $this->getRalativeProducts($cateId);
+						$data['relativeProducts'] = $this->getRalativeProducts($idCate);
 						//dd($data['sizes']);
 						return view('frontend.product.detail',$data);
 
@@ -95,7 +96,7 @@ class ProductController extends BaseController
 					$infoColor = $color->getInfoColorByArrId($arrColor);
 					// $infoSize  = $size->getInfoSizeByArrid($arrSize);
 					$cateId = Products::select('categories_id')->where('id', $id)->first();
-					
+					$idCate = json_decode($cateId)->categories_id;
 					$data = [];
 					$data['info'] = $infoPd;
 					$data['items'] = $arrProducts;
@@ -104,7 +105,7 @@ class ProductController extends BaseController
 					$data['sizes'] = $arrSizes;
 					$data['cate'] = $this->getAllDataCategoriesForUser($cate);
 					$data['idCate'] = $cateId;
-					$data['relativeProducts'] = $this->getRalativeProducts($cateId);
+					$data['relativeProducts'] = $this->getRalativeProducts($idCate);
 					
 					return view('frontend.product.detail',$data);
 			}

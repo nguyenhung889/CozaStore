@@ -34,7 +34,7 @@
           </h4>
 
           <p class="stext-107 cl7 size-201">
-            Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+84) 964 387 230
+            Any questions? Let us know in store at 98/165 Duong Quang Ham, Quan Hoa, Cau Giay, Ha Noi or call us on (+84) 964 387 230
           </p>
 
           <div class="p-t-27">

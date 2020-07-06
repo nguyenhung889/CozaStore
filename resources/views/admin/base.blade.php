@@ -19,7 +19,7 @@
 
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/admin/sb-admin-2.min.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+  <link rel="stylesheet" href="{{ asset('css/admin/toastr.min.css') }}">
   <style>
     .has-search .form-control {
       padding-left: 2.375rem;
@@ -412,7 +412,7 @@
     //xoá feedback
   
   </script>
-  <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+  <script src="{{ asset('js/admin/toastr.min.js') }}"></script>
   {!! Toastr::message() !!}
   @stack('js')
 

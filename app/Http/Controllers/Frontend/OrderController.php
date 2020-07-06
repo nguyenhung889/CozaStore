@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Products;
 use App\Models\Sizes;
 use App\Models\Colors;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -31,19 +32,17 @@ class OrderController extends Controller
     }
     
     public function confirmOrders(Request $request){
-        $transaction = new Transaction;
         $id = $request->transaction_id;
         $transaction = Transaction::find($id);
-        $transaction->tr_confirm = Transaction::STATUS_DONE;
+        $transaction->tr_confirm = 1;
         $transaction->save();
         \Toastr::success('Confirmed successfully', '', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
     }
     public function removeOrders(Request $request){
-        $transaction = new Transaction;
-        $id = $request->transaction_id;
+        $id = $request->transaction_id2;
         $transaction = Transaction::find($id);
-        $transaction->tr_confirm = Transaction::STATUS_CANCEL;
+        $transaction->tr_confirm = 2;
         $transaction->save();
         \Toastr::success('Removed successfully', '', ["positionClass" => "toast-top-right"]);
         return redirect()->route('fr.getOrderTracking');

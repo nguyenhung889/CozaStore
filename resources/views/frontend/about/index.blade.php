@@ -42,15 +42,11 @@
 						</h3>
 
 						<p class="stext-113 cl6 p-b-26">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat consequat enim, non auctor massa ultrices non. Morbi sed odio massa. Quisque at vehicula tellus, sed tincidunt augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas varius egestas diam, eu sodales metus scelerisque congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas gravida justo eu arcu egestas convallis. Nullam eu erat bibendum, tempus ipsum eget, dictum enim. Donec non neque ut enim dapibus tincidunt vitae nec augue. Suspendisse potenti. Proin ut est diam. Donec condimentum euismod tortor, eget facilisis diam faucibus et. Morbi a tempor elit.
+							CozaStore was born from the passion for business and fashion. Overcoming many challenges, CozaStore has become the most potential company of Vietnam's fashion industry. The company is appreciated by many large international fashion corporations and is chosen as a long-term cooperation partner.
 						</p>
 
 						<p class="stext-113 cl6 p-b-26">
-							Donec gravida lorem elit, quis condimentum ex semper sit amet. Fusce eget ligula magna. Aliquam aliquam imperdiet sodales. Ut fringilla turpis in vehicula vehicula. Pellentesque congue ac orci ut gravida. Aliquam erat volutpat. Donec iaculis lectus a arcu facilisis, eu sodales lectus sagittis. Etiam pellentesque, magna vel dictum rutrum, neque justo eleifend elit, vel tincidunt erat arcu ut sem. Sed rutrum, turpis ut commodo efficitur, quam velit convallis ipsum, et maximus enim ligula ac ligula. 
-						</p>
-
-						<p class="stext-113 cl6 p-b-26">
-							Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+							For domestic consumers, CozaStore is known as the leading fashion brand. In particular, customers are captivated by the modern, luxurious style of CozaStore on par with world famous brands.
 						</p>
 					</div>
 				</div>
@@ -71,8 +67,12 @@
 							Our Mission
 						</h3>
 
-						<p class="stext-113 cl6 p-b-26">
-							Mauris non lacinia magna. Sed nec lobortis dolor. Vestibulum rhoncus dignissim risus, sed consectetur erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam maximus mauris sit amet odio convallis, in pharetra magna gravida. Praesent sed nunc fermentum mi molestie tempor. Morbi vitae viverra odio. Pellentesque ac velit egestas, luctus arcu non, laoreet mauris. Sed in ipsum tempor, consequat odio in, porttitor ante. Ut mauris ligula, volutpat in sodales in, porta non odio. Pellentesque tempor urna vitae mi vestibulum, nec venenatis nulla lobortis. Proin at gravida ante. Mauris auctor purus at lacus maximus euismod. Pellentesque vulputate massa ut nisl hendrerit, eget elementum libero iaculis.
+						<p class="stext-113 cl6 p-b-26">	
+							The strength and potential of the company does not lie in numbers, machines or factories, but in the CozaStore Man himself. It is a dedicated, reputable Board of Directors, a staff of full of enthusiasm and creativity. Everyone desires to dedicate themselves to the mission of the company - where the idea of ​​sublimation, talent is encouraged, honesty and sacrifice are respected. It is the greatest and most valuable asset of the company built by each member every hour, every hour through every job and every product because it is the pride and work meaning of each member of the team. CozaStore.
+							<br>
+							So far, CozaStore is not only loved by customers for its luxurious and attractive fashion models, but also because we lead the way in continuously launching fashion collections.
+							<br/>
+							The road ahead is certainly full of thorns. Although we always try our best, we can still have unavoidable times. These challenges will help us to be stronger, stronger and more mature. CozaStore has no room for fearful people.
 						</p>
 
 						<div class="bor16 p-l-29 p-b-9 m-t-22">

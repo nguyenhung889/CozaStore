@@ -106,7 +106,7 @@ section .section-title {
 			if($value->tr_confirm == 1){
 				$checked--;
 				$received++;
-			}elseif($value->tr_confirm == 2){
+			}elseif($value->tr_confirm == 2 || $value->tr_confirm == 3){
 				$unchecked--;
 			}
 			else{
@@ -135,8 +135,8 @@ section .section-title {
 						<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 							@if($unchecked)
 							@foreach($newItems as $key => $items)
-							@if($items[0]->tr_status === 0)
-							<div class="container container-3">
+							@if($items[0]->tr_status === 0 && $items[0]->tr_confirm === 0)
+							<div class="container container-3 container-{{$key}}" id="container-{{$key}}">
 								@foreach($items as $item)
 							
 								<?php
@@ -166,12 +166,12 @@ section .section-title {
 								</div>
 								@endforeach
 							</div>
-							<div class="container container-3" id="container-{{$key}}" style="margin-top:0 !important;">
+							<div class="container container-3 container-{{$key}}" id="container-{{$key}}" style="margin-top:0 !important;">
 								<div class="card card-total-price">
 									<div class="card-body" style="display: flex;flex-direction: column;align-items: flex-end;">
 										@if($item->tr_payment_method === 'COD')
 										<h2 class="card-title" style="color:red !important;">Total: {{ $item->tr_total }}$</h2>
-										<button class="btn btn-primary btn-id" data-toggle="modal" id="{{$key}}" data-target="#ModalCenter2" id="btnCancel">Remove</button>
+										<button class="btn btn-primary btnCancel" data-toggle="modal" id="{{$key}}" data-target="#ModalCenter2" id="btnCancel">Remove</button>
 										@else
 										<h2 class="card-title" style="color:red !important;">Total: {{ $item->tr_total }}$</h2>
 										@endif
@@ -180,7 +180,7 @@ section .section-title {
 							</div>
 							<form action="{{route('fr.removeOrders')}}" method="POST">
 							@csrf
-							<input type="hidden" name="transaction_id" id="transaction_id">
+							<input type="hidden" name="transaction_id2" id="transaction_id2" class="transaction_id2">
 							<div class="modal fade" id="ModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
@@ -195,7 +195,7 @@ section .section-title {
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-												<button type="submit" class="btn btn-primary">Confirm</button>
+												<button type="submit" class="btn btn-primary btm-remove-confirm">Confirm</button>
 											</div>
 										</div>
 									</div>
@@ -253,11 +253,11 @@ section .section-title {
 								</div>
 								@endforeach
 							</div>
-							<div class="container container-3" id="container-{{$key}}" style="margin-top:0 !important;">
+							<div class="container container-3" id="container-{{$item_key}}" style="margin-top:0 !important;">
 								<div class="card card-total-price">
 									<div class="card-body" style="display: flex;flex-direction: column;align-items: flex-end;">
 										<h2 class="card-title" style="color:red !important;">Total: {{ $item->tr_total }}$</h2>
-										<button class="btn btn-primary btn-id" data-toggle="modal" id="{{$key}}" data-target="#ModalCenter" id="btnReceived">Received</button>
+										<button class="btn btn-primary btn-id" data-toggle="modal" id="{{$item_key}}" data-target="#ModalCenter" id="btnReceived">Received</button>
 									</div>
 								</div>  
 							</div>
@@ -370,6 +370,18 @@ section .section-title {
 			let id = $(this).attr('id');
 			$('#transaction_id').attr("value",id);
 			let container = '#container-'+id;
+			console.log(container);
+			$(container).remove();
+		});
+		$('.btnCancel').click(function(){
+			let id = $(this).attr('id');
+			$('.transaction_id2').attr("value",id);
+			
+		});
+		$('.btn-remove-confirm').click(function(){
+			let id = $('.btnCancel').attr('id');
+			let container = '.container-'+id;
+			console.log(container);
 			$(container).remove();
 		})
 	});

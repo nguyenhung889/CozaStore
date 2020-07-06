@@ -90,7 +90,7 @@ class Products extends Model
     {
         $data = Products::select('*')
         ->orderBy('id')
-                ->paginate(12);
+                ->paginate(50);
         return $data;
     }
     public function getRalativeProducts($idCate)

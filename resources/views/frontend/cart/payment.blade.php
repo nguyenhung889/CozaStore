@@ -136,10 +136,10 @@
 				<div class="container-fluild">
 					<div class="col-lg-12 col-md-12 col-xs-8 col-sm-8">
 						<div class="row m-t-15 m-b-15" >
-							<input type="text" class="form-control" placeholder="Phone..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="phone"  value="{{Auth::user()->phone}}">
+							<input type="text" class="form-control" placeholder="Phone..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="phone"  pattern="[0-9]{1}[0-9]{9}" title="Enter 10 digit mobile number" value="{{Auth::user()->phone}}" required>
 						</div>
 						<div class="row m-t-15 m-b-15">
-							<input type="text" class="form-control" placeholder="Address..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="address" value="{{Auth::user()->address}}">
+							<input type="text" class="form-control" placeholder="Address..." aria-label="Recipient's username" aria-describedby="basic-addon2" title="Enter your real address" name="address" value="{{Auth::user()->address}}" required>
 						</div>
 						<div class="row m-t-15 m-b-15">
 							<input type="text" class="form-control" placeholder="Note..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="note" value="">

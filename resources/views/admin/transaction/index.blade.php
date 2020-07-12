@@ -25,7 +25,7 @@
 					<th>Telephone</th>
 					<th>Payment method</th>
 					<th>Total </th>
-					<th>Status</th>
+					<th style="width: 300px;">Status</th>
 					<th colspan="2"  class="text-center">Action</th>
 				</tr>
 			</thead>
@@ -44,14 +44,14 @@
             <td>{{ $transaction->tr_total }}$</td>
             <td>
             @if( $transaction->tr_status   == 1)
-              <a href="#" class="label-success label">Handled</a>
+              <a href="#" class="label-success label" style="font-size: 1.5rem; color: green;">Handled</a>
 							@if($transaction->tr_confirm == 1)
 								<p>(Customer was received)</p>
 							@else
 								<p>(Shipping)</p>
 							@endif
 			@elseif($transaction->tr_confirm == 2)
-				<a href="" class="label-success label" data-toggle="modal" data-target="#exampleModalCenter">
+				<a href="" class="label-success label" data-toggle="modal" data-target="#exampleModalCenter" style="font-size: 1.5rem;">
 				Customer requested to cancel this order
 				</a>
 
@@ -80,9 +80,9 @@
 					</div>
 				</form>
 			@elseif($transaction->tr_confirm == 3)
-				<img src="{{ asset('upload/images/cancelled.jpg') }}" style="width: 100px; height: 50px;" alt="">
+				<h4 style="color:red;">Cancelled</h4>
             @else
-              	<a href="{{route('admin.sendEmailBill', $transaction->id)}}" class="label-default label">Waiting for progressing</a>
+              	<a href="{{route('admin.sendEmailBill', $transaction->id)}}" class="label-default label" style="font-size: 1.5rem; color: #ff9f1a;">Waiting for progressing</a>
             @endif
             </td>
 				<td>

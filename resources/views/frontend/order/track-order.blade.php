@@ -89,8 +89,13 @@ section .section-title {
 		font-size: 1.5rem;
 	}
 }
+@media only screen and (min-width: 1366px){
+    #section-order{
+		margin-top: 100px;
+	}
+}
 </style>
-<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('http://localhost:8000/frontend/images/bg-02.jpg');margin-top: 100px;">
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" id="section-order" style="background-image: url('{{asset('frontend/images/bg-02.jpg')}}');">
 	<h2 class="ltext-105 cl0 txt-center">
 		Track order
 	</h2>

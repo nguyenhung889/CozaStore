@@ -97,24 +97,33 @@ class CartController extends BaseController
         }
         
         $id = Auth::id();
-        $transactionId = Transaction::insertGetId([
-            'tr_user_id' => $id,
-            'tr_total' => $totalMoney2,
-            'tr_note' => $request->note,
-            'tr_address' => $request->address,
-            'tr_phone' => $request->phone,
-            'tr_payment_method' => $request->payment,
-            'created_at' => Carbon::now()
-        ]);
+        // $transactionId = Transaction::insertGetId([
+        //     'tr_user_id' => $id,
+        //     'tr_total' => $totalMoney2,
+        //     'tr_note' => $request->note,
+        //     'tr_address' => $request->address,
+        //     'tr_phone' => $request->phone,
+        //     'tr_payment_method' => $request->payment,
+        //     'created_at' => Carbon::now()
+        // ]);
+        $transaction = new Transaction();
+        $transaction->tr_user_id = $id;
+        $transaction->tr_total = $totalMoney2;
+        $transaction->tr_note = $request->note;
+        $transaction->tr_address = $request->address;
+        $transaction->tr_phone = $request->phone;
+        $transaction->tr_payment_method = $request->payment;
+        $transaction->created_at = Carbon::now();
+        $transaction->save();
         if($request->payment === 'Stripe'){
             return view('frontend.payment.index');
         }else{
-            if($transactionId)
+            if($transaction)
             {
                 $products = Cart::content();
                 foreach($products as $product){
                     $or = Order::insert([
-                        'or_transaction_id' => $transactionId,
+                        'or_transaction_id' => $transaction->id,
                         'or_product_id' => $product->id,
                         'or_qty' => $product->qty,
                         'or_price' => $product->price - $product->price * $product->sale_off /100,

@@ -137,7 +137,7 @@ $(function() {
   
     if (!$form.data('cc-on-file')) {
       e.preventDefault();
-      Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+      Stripe.setPublishableKey('pk_test_uOG9DmtDCSaaV2RP7SUbYS6s00fthfJyVm');
       Stripe.createToken({
         number: $('.card-number').val(),
         cvc: $('.card-cvc').val(),

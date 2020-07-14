@@ -55,18 +55,6 @@
             </thead>
             
             <tbody>
-                @if(json_decode($products) === null)
-                <tr>
-                    <td colspan="5">
-                        <div class="container-fluid">
-                            <div class="row" style="width: 100%; height: 300px;">
-                                <img src="{{ asset('frontend/images/icons/no-orders.png') }}" alt="" style="width: 100px;height: 100px;position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);">
-                                <p style="position: absolute;left: 50%;top: 65%;transform: translate(-50%, -50%);">No orders.</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                @else
                 @foreach($products as $key => $item)
                 <?php 
                     $countStr = strlen($item->image_product);
@@ -85,7 +73,6 @@
                     </td>
                 </tr>
                 @endforeach
-                @endif
             </tbody>
         </table>              
 		

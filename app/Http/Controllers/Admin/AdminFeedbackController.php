@@ -14,8 +14,8 @@ class AdminFeedbackController extends Controller
     public function getFeedbackProducts(Request $request){
         $data = Comments::join('products','products.id', '=', 'comments.co_product_id')
                         ->select('comments.*', 'products.name_product')
-                        ->orderBy('comments.id')
-                        ->paginate(10);
+                        ->orderBy('comments.created_at','DESC')
+                        ->paginate(50);
 
         return view('admin.feedbacks.products', compact('data'));
     }

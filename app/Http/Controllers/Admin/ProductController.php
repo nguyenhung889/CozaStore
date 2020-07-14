@@ -291,7 +291,7 @@ class ProductController extends Controller
                 $dataUpdate = [
                     'name_product' => $nameProduct,
                     'pro_slug' => str_slug($nameProduct),
-                    'categories_id' => json_encode($categories),
+                    'categories_id' => $categories,
                     'colors_id' => json_encode($colors),
                     'sizes_id' => json_encode($data),
                     'brands_id' => $brand,

@@ -50,7 +50,7 @@
   
                     <form role="form" action="{{ route('fr.stripe.post') }}" method="post" class="require-validation"
                                                      data-cc-on-file="false"
-                                                    data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                                                    data-stripe-publishable-key="{{ env('STRIPE_PUBLISHABLE') }}"
                                                     id="payment-form">
                         @csrf
   
@@ -137,7 +137,7 @@ $(function() {
   
     if (!$form.data('cc-on-file')) {
       e.preventDefault();
-      Stripe.setPublishableKey('pk_test_uOG9DmtDCSaaV2RP7SUbYS6s00fthfJyVm');
+      Stripe.setPublishableKey($form.data('stripe-publishable-key'));
       Stripe.createToken({
         number: $('.card-number').val(),
         cvc: $('.card-cvc').val(),

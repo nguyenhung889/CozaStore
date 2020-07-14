@@ -97,33 +97,24 @@ class CartController extends BaseController
         }
         
         $id = Auth::id();
-        // $transactionId = Transaction::insertGetId([
-        //     'tr_user_id' => $id,
-        //     'tr_total' => $totalMoney2,
-        //     'tr_note' => $request->note,
-        //     'tr_address' => $request->address,
-        //     'tr_phone' => $request->phone,
-        //     'tr_payment_method' => $request->payment,
-        //     'created_at' => Carbon::now()
-        // ]);
-        $transaction = new Transaction();
-        $transaction->tr_user_id = $id;
-        $transaction->tr_total = $totalMoney2;
-        $transaction->tr_note = $request->note;
-        $transaction->tr_address = $request->address;
-        $transaction->tr_phone = $request->phone;
-        $transaction->tr_payment_method = $request->payment;
-        $transaction->created_at = Carbon::now();
-        $transaction->save();
+        $transactionId = Transaction::insertGetId([
+            'tr_user_id' => $id,
+            'tr_total' => $totalMoney2,
+            'tr_note' => $request->note,
+            'tr_address' => $request->address,
+            'tr_phone' => $request->phone,
+            'tr_payment_method' => $request->payment,
+            'created_at' => Carbon::now()
+        ]);
         if($request->payment === 'Stripe'){
             return view('frontend.payment.index');
         }else{
-            if($transaction)
+            if($transactionId)
             {
                 $products = Cart::content();
                 foreach($products as $product){
                     $or = Order::insert([
-                        'or_transaction_id' => $transaction->id,
+                        'or_transaction_id' => $transactionId,
                         'or_product_id' => $product->id,
                         'or_qty' => $product->qty,
                         'or_price' => $product->price - $product->price * $product->sale_off /100,
@@ -176,7 +167,7 @@ class CartController extends BaseController
         //GET LASTED ID
         $max = count($arr_id);
         $or_id = $arr_id[$max - 1]->id;
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe\Stripe::setApiKey('sk_test_wUGibzQmcJecbbzJPnowCMLY00Vc5vD2FP');
         Stripe\Charge::create ([
                 "amount" => $totalMoney2 * 100,
                 "currency" => "usd",

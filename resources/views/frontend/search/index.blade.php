@@ -8,6 +8,10 @@
 .sec-banner{
 	display:none !important;
 }
+#btnSort{
+  margin-top:70px;
+  margin-left: 130px;
+}
 @media only screen and (max-width: 667px){
   .section-search{
       margin-top:0px;
@@ -88,74 +92,52 @@
         <!-- Filter -->
         <div class="dis-none panel-filter w-full p-t-10">
           <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
-            <div class="filter-col1 p-r-15 p-b-27">
-              <div class="mtext-102 cl2 p-b-15 col-lg-4 col-md-6 col-sm-6 col-xs-6">
+          <form action="" id="sortProducts" style="display:flex; align-items:center;">
+            <div class="filter-col1 p-r-15 p-b-27" style="width:100% !important;margin-bottom:36px">
+              <div class="mtext-102 cl2 p-b-15" id="sortBy">
                 Sort By
               </div>
 
               <ul>
-                <li class="p-b-6">
-                  <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-                    Newness
-                  </a>
+                 <!-- <li class="p-b-6" style="display:flex; align-items:center">
+                  <input type="checkbox" value="latest" style="margin-right:10px;" name="sortDate">Newness
+                </li> -->
+
+                <li class="p-b-6" style="display:flex; align-items:center">
+                  <input type="radio" value="asc" style="margin-right:10px;" name="sortPrice">Price: Low to High
                 </li>
 
-                <li class="p-b-6">
-                  <a href="{{ route('fr.sortProductsByPriceAsc') }}" class="filter-link stext-106 trans-04">
-                    Price: Low to High
-                  </a>
-                </li>
-
-                <li class="p-b-6">
-                  <a href="{{ route('fr.sortProductsByPriceDesc') }}" class="filter-link stext-106 trans-04">
-                    Price: High to Low
-                  </a>
+                <li class="p-b-6" style="display:flex; align-items:center">
+                  <input type="radio" value="desc" style="margin-right:10px;" name="sortPrice">Price: High to Low
                 </li>
               </ul>
             </div>
 
-            <div class="filter-col2 p-r-15 p-b-27">
-              <div class="mtext-102 cl2 p-b-15 col-lg-4 col-md-6 col-sm-6 col-xs-6">
+            <div class="filter-col2 p-r-15 p-b-27" id="sortPrice">
+              <div class="mtext-102 cl2 p-b-15 ">
                 Price
               </div>
 
-              <form action="">
+              
                 <span>
                   Min:<br />
-                  <input type="number" name="min_price" required style="border: 1px solid gray;
-                  border-radius:10px; padding-left:10px;"/>
+                  <input type="number" name="min_price" style="border: 1px solid gray;
+                  border-radius:10px; padding-left:10px;" min="1"/>
                   Max:<br />
-                  <input type="number" name="max_price" required style="border: 1px solid gray;
-                  border-radius:10px; padding-left:10px;"/>
-                  <button
-                    id="btnSort"
-                    type="submit"
-                    class="btn btn-primary"
-                    style="margin-top:10px;"
-                  >
-                    OK
-                  </button>
+                  <input type="number" name="max_price" style="border: 1px solid gray;
+                  border-radius:10px; padding-left:10px;" min="1"/>
                 </span>
-              </form>
+              
             </div>
-
-            <div class="filter-col3 p-r-15 p-b-27">
-              <div class="mtext-102 cl2 p-b-15">
-                Color
-              </div>
-
-              <ul>
-              @foreach($colors as $data)
-              <?php $cl_name = json_decode($data)->name_color ?>
-                <li class="p-b-6">
-                  <a href="{{ route('fr.sortProductsByColor', $data->id) }}" class="filter-link stext-106 trans-04">
-                    {{ $cl_name }}
-                  </a>
-                </li>
-              @endforeach
-              </ul>
-            </div>
+            <button
+              id="btnSort"
+              type="submit"
+              class="btn btn-primary"
+            >
+            Search
+            </button>
           </div>
+          </form>
         </div>
       </div>
 

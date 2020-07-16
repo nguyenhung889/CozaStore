@@ -24,7 +24,7 @@ class OrderController extends Controller
                                 'products.name_product','products.image_product','orders.or_size','orders.or_color',
                                 'transactions.tr_confirm','transactions.tr_payment_method')
                         ->where('transactions.tr_user_id',$idUser)
-                        ->orderBy('orders.or_transaction_id')
+                        ->orderBy('orders.created_at','DESC')
                         ->get();
         $arrSizes = Sizes::select('id','letter_size')->get();
         $arrColors = Colors::select('id', 'name_color')->get();

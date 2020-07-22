@@ -165,7 +165,6 @@
 	<script type="text/javascript">
 		$(function(){
 			$('.btnDelete').on('click',function() {
-				alert('aaaa');
 				let self = $(this);
 				let idPd = self.attr('data-id');
 				console.log(idPd);

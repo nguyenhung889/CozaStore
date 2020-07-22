@@ -22,7 +22,7 @@
 				<label for="nameCategories"> Description: </label>
 				<input type="text" class="form-control" name="description" id="description" value="{{ $blogs->b_description }}">
         <label for="nameCategories"> Content: </label>
-				<textarea type="text" class="form-control" name="content" id="meta_content" value="{{ $blogs->b_content }}"></textarea>
+				<textarea type="text" class="form-control" name="content" id="meta_content" value="{!! $blogs->b_content !!}"></textarea>
         <label for="nameCategories"> Meta title: </label>
 				<input type="text" class="form-control" name="meta_title" id="meta_title" value="{{ $blogs->b_title_seo }}">
         <label for="nameCategories"> Meta decription: </label>

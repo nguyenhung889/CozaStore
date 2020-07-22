@@ -123,7 +123,7 @@ class AdminBlogController extends Controller
                         $arr['b_title_seo'] = $request->meta_title;
                         $data::where('id',$id)->update($arr);
                         \Toastr::success('Edit blog successfully', '', ["positionClass" => "toast-top-right"]);
-                        return redirect()->back();
+                        return redirect()->route('admin.blogs');
                     }
                     \Toastr::error('Edit blog failed', '', ["positionClass" => "toast-top-right"]);
                     return redirect()->back();
